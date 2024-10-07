@@ -1,0 +1,29 @@
+name: Continuous Deployment
+
+# Trigger the workflow when a push is made to the main branch
+on:
+  push:
+    branches:
+      - main
+
+# Define a single job named "Deploy"
+jobs:
+  Deploy:
+    # Use the latest Ubuntu runner
+    runs-on: ubuntu-latest
+
+    # Steps of the job
+    steps:
+      # Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Go environment with the specific version
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.23.0'  # Specify the Go version (update as needed)
+
+      # Build the app using the build script
+      - name: Build app
+        run: ./scripts/buildprod.sh
